@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+    <user id="100001" username="zhangsan" password="123456" real_name="张三" mobile="16666666666"
+          email="222222222@qq.com" position="管理员" status="1" create_time="2018-11-24 09:31:45" creator_id="100000"
+          creator_name="超级管理员" update_time="2018-11-24 19:31:45" updater_id="100000" updater_name="超级管理员"/>
+</dataset>

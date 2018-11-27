@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
  */
 @Getter
 @Setter
-@Accessors(fluent = true, chain = true)
+@Accessors(chain = true)
 @Entity
 @Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)

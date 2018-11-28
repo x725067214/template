@@ -1,4 +1,4 @@
-package com.xxw.admin.constant;
+package com.xxw.common.constant;
 
 /**
  * @author xxw

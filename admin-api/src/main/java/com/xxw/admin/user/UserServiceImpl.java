@@ -1,7 +1,7 @@
 package com.xxw.admin.user;
 
 import com.github.dozermapper.core.Mapper;
-import com.xxw.admin.exception.BusinessException;
+import com.xxw.common.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,9 +1,9 @@
-package com.xxw.admin.model;
+package com.xxw.common.web;
 
-import com.xxw.admin.exception.BusinessException;
+import com.xxw.common.exception.BusinessException;
 
-import static com.xxw.admin.constant.StatusConstants.FAIL;
-import static com.xxw.admin.constant.StatusConstants.SUCCESS;
+import static com.xxw.common.constant.StatusConstants.FAIL;
+import static com.xxw.common.constant.StatusConstants.SUCCESS;
 
 /**
  * @author xxw

@@ -1,6 +1,6 @@
 package com.xxw.admin.user;
 
-import com.xxw.admin.model.ResponseResult;
+import com.xxw.common.web.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/admin/user")
+    @GetMapping("/user")
     @ResponseBody
     public ResponseResult findById(Integer id) {
         return ResponseResult.success(userService.findById(id));

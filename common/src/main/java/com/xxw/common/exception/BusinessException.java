@@ -1,4 +1,6 @@
-package com.xxw.admin.exception;
+package com.xxw.common.exception;
+
+import static com.xxw.common.constant.StatusConstants.FAIL;
 
 /**
  * @author xxw
@@ -23,11 +25,11 @@ public class BusinessException extends RuntimeException {
     }
 
     public static BusinessException build(String message) {
-        return new BusinessException("fail", message, null);
+        return new BusinessException(FAIL, message, null);
     }
 
     public static BusinessException build(String message, Object data) {
-        return new BusinessException("fail", message, data);
+        return new BusinessException(FAIL, message, data);
     }
 
     public static BusinessException build(String code, String message) {

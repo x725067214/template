@@ -1,5 +1,6 @@
 package com.xxw.admin.user;
 
+import com.xxw.common.json.serializer.LocalDateTimeFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -59,6 +60,7 @@ public class UserDTO {
     /**
      * 创建时间
      */
+    @LocalDateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
 
     /**
@@ -74,6 +76,7 @@ public class UserDTO {
     /**
      * 更新时间
      */
+    @LocalDateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     /**

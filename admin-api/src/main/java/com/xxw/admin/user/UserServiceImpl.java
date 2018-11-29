@@ -24,8 +24,7 @@ class UserServiceImpl implements UserService {
     public Optional<UserDTO> findByUsername(String username) {
         Optional<UserPO> userPO = userRepository.findByUsername(username);
         if (userPO.isPresent()) {
-            UserDTO userDTO = mapper.map(userPO.get(), UserDTO.class);
-            return Optional.of(userDTO);
+            return Optional.of(mapper.map(userPO.get(), UserDTO.class));
         }
         else {
             return Optional.empty();
@@ -35,11 +34,10 @@ class UserServiceImpl implements UserService {
     public UserDTO findById(Integer id) {
         Optional<UserPO> userPO = userRepository.findById(id);
         if (userPO.isPresent()) {
-            UserDTO userDTO = mapper.map(userPO.get(), UserDTO.class);
-            return userDTO;
+            return mapper.map(userPO.get(), UserDTO.class);
         }
         else {
-            throw BusinessException.build("用户不存在");
+            throw new BusinessException("用户不存在");
         }
     }
 }

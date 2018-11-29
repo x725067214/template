@@ -26,10 +26,6 @@ public class LocalDateTimeJsonSerializer extends JsonSerializer implements Conte
         this.pattern = pattern;
     }
 
-    private LocalDateTimeJsonSerializer build(String pattern) {
-        return new LocalDateTimeJsonSerializer(pattern);
-    }
-
     @Override
     public void serialize(Object o, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
             throws IOException {
@@ -42,7 +38,6 @@ public class LocalDateTimeJsonSerializer extends JsonSerializer implements Conte
     public JsonSerializer<?> createContextual(SerializerProvider serializerProvider, BeanProperty beanProperty)
             throws JsonMappingException {
         LocalDateTimeFormat localDateTimeFormat = beanProperty.getAnnotation(LocalDateTimeFormat.class);
-        String pattern = localDateTimeFormat.pattern();
-        return build(pattern);
+        return new LocalDateTimeJsonSerializer(localDateTimeFormat.pattern());
     }
 }

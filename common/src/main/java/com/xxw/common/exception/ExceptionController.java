@@ -48,7 +48,8 @@ public class ExceptionController implements ErrorController {
         response.setStatus(HttpStatus.OK.value());
         Throwable throwable = this.errorAttributes.getError(new ServletWebRequest(request));
         if (throwable instanceof BusinessException) {
-            return ResponseResult.build((BusinessException) throwable);
+            BusinessException businessException = (BusinessException) throwable;
+            return ResponseResult.build(businessException.getCode(), businessException.getMessage());
         }
         else if (throwable instanceof MethodArgumentNotValidException) {
             String message = ((MethodArgumentNotValidException) throwable).getBindingResult().getFieldError()

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -21,15 +20,19 @@ public class JacksonUtils implements ApplicationContextAware {
     private static ObjectMapper objectMapper;
 
     @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        objectMapper = applicationContext.getBean(ObjectMapper.class);
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        setObjectMapper(applicationContext.getBean(ObjectMapper.class));
+    }
+
+    private synchronized static void setObjectMapper(ObjectMapper applicationContextObjectMapper) {
+        objectMapper = applicationContextObjectMapper;
     }
 
     public static String writeValueAsString(Object value) {
         try {
             return objectMapper.writeValueAsString(value);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new JacksonException(e);
         }
     }
 
@@ -37,7 +40,7 @@ public class JacksonUtils implements ApplicationContextAware {
         try {
             return objectMapper.readValue(content, valueType);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new JacksonException(e);
         }
     }
 
@@ -46,7 +49,7 @@ public class JacksonUtils implements ApplicationContextAware {
         try {
             return objectMapper.readValue(content, valueType);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new JacksonException(e);
         }
     }
 
@@ -54,7 +57,7 @@ public class JacksonUtils implements ApplicationContextAware {
         try {
             return objectMapper.readTree(content);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new JacksonException(e);
         }
     }
 
@@ -62,7 +65,7 @@ public class JacksonUtils implements ApplicationContextAware {
         try {
             return objectMapper.readValue(jsonNode.traverse(), valueType);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new JacksonException(e);
         }
     }
 
@@ -71,7 +74,7 @@ public class JacksonUtils implements ApplicationContextAware {
         try {
             return objectMapper.readValue(jsonNode.traverse(), valueType);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new JacksonException(e);
         }
     }
 
@@ -88,7 +91,7 @@ public class JacksonUtils implements ApplicationContextAware {
         try {
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(value);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new JacksonException(e);
         }
     }
 }

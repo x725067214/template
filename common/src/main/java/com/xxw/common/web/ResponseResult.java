@@ -1,7 +1,5 @@
 package com.xxw.common.web;
 
-import com.xxw.common.exception.BusinessException;
-
 import static com.xxw.common.constant.StatusConstants.FAIL;
 import static com.xxw.common.constant.StatusConstants.SUCCESS;
 
@@ -14,17 +12,17 @@ public class ResponseResult {
     /**
      * 状态码
      */
-    private String code;
+    private final String code;
 
     /**
      * 信息
      */
-    private String msg;
+    private final String msg;
 
     /**
      * 数据
      */
-    private Object body;
+    private final Object body;
 
     private ResponseResult(String code, String msg, Object body) {
         this.code = code;
@@ -56,32 +54,15 @@ public class ResponseResult {
         return new ResponseResult(code, msg, body);
     }
 
-    public static ResponseResult build(BusinessException businessException) {
-        return new ResponseResult(businessException.getCode(), businessException.getMessage(),
-                businessException.getData());
-    }
-
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 
     public String getMsg() {
         return msg;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
     public Object getBody() {
         return body;
-    }
-
-    public void setBody(Object body) {
-        this.body = body;
     }
 }

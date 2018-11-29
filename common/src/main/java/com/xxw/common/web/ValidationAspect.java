@@ -4,9 +4,8 @@ import com.xxw.common.exception.ExceptionController;
 import com.xxw.common.json.JacksonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -29,12 +28,12 @@ import java.util.List;
 @Order(1)
 public class ValidationAspect {
 
-    @Around("@annotation(org.springframework.web.bind.annotation.RequestMapping)" +
+    @Before("@annotation(org.springframework.web.bind.annotation.RequestMapping)" +
             " || @annotation(org.springframework.web.bind.annotation.PostMapping)" +
             " || @annotation(org.springframework.web.bind.annotation.GetMapping)")
-    public Object around(JoinPoint joinPoint) throws Throwable {
+    public void validate(JoinPoint joinPoint) throws Throwable {
         if (joinPoint.getTarget() instanceof ExceptionController) {
-            return ((ProceedingJoinPoint) joinPoint).proceed(joinPoint.getArgs());
+            return;
         }
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -72,6 +71,5 @@ public class ValidationAspect {
                 throw new IllegalArgumentException(parameterNames[i] + "不能为空");
             }
         }
-        return ((ProceedingJoinPoint) joinPoint).proceed(joinPoint.getArgs());
     }
 }

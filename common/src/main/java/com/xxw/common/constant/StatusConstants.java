@@ -6,6 +6,10 @@ package com.xxw.common.constant;
  */
 public class StatusConstants {
 
+    private StatusConstants() {
+        throw new IllegalStateException("Utility Class");
+    }
+
     public static final String SUCCESS = "success";
 
     public static final String FAIL = "fail";

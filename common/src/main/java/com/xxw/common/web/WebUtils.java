@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class WebUtils {
 
+    private WebUtils() {
+        throw new IllegalStateException("Utility Class");
+    }
+
     public static HttpServletRequest getRequest() {
         return  ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     }

@@ -11,48 +11,19 @@ public class BusinessException extends RuntimeException {
     /**
      * 状态码
      */
-    private String code;
+    private final String code;
 
-    /**
-     * 数据
-     */
-    private Object data;
-
-    private BusinessException(String code, String message, Object data) {
+    public BusinessException(String code, String message) {
         super(message);
         this.code = code;
-        this.data = data;
     }
 
-    public static BusinessException build(String message) {
-        return new BusinessException(FAIL, message, null);
-    }
-
-    public static BusinessException build(String message, Object data) {
-        return new BusinessException(FAIL, message, data);
-    }
-
-    public static BusinessException build(String code, String message) {
-        return new BusinessException(code, message, null);
-    }
-
-    public static BusinessException build(String code, String message, Object data) {
-        return new BusinessException(code, message, data);
+    public BusinessException(String message) {
+        super(message);
+        this.code = FAIL;
     }
 
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
     }
 }

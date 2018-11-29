@@ -24,7 +24,7 @@ public class JacksonUtils implements ApplicationContextAware {
         setObjectMapper(applicationContext.getBean(ObjectMapper.class));
     }
 
-    private synchronized static void setObjectMapper(ObjectMapper applicationContextObjectMapper) {
+    private static synchronized void setObjectMapper(ObjectMapper applicationContextObjectMapper) {
         objectMapper = applicationContextObjectMapper;
     }
 

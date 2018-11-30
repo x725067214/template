@@ -23,10 +23,10 @@ import java.util.Optional;
  * @author xxw
  * @date 2018/11/23
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        MysqlDbUnitTestExecutionListener.class})
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
+//        MysqlDbUnitTestExecutionListener.class})
 public class UserRepositoryTests {
 
     @Autowired

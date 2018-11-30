@@ -12,8 +12,8 @@ import java.util.Optional;
  * @author xxw
  * @date 2018/11/27
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
 public class UserServiceImplTests {
 
     @Autowired

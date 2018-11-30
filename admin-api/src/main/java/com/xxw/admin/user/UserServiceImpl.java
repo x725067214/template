@@ -16,6 +16,8 @@ import java.util.Optional;
 @Service
 class UserServiceImpl implements UserService {
 
+    private static final String USER_NOT_EXIST = "用户不存在";
+
     @Autowired
     private UserRepository userRepository;
 
@@ -51,7 +53,7 @@ class UserServiceImpl implements UserService {
             return mapper.map(userPO.get(), UserDTO.class);
         }
         else {
-            throw new BusinessException("用户不存在");
+            throw new BusinessException(USER_NOT_EXIST);
         }
     }
 
@@ -70,7 +72,7 @@ class UserServiceImpl implements UserService {
             }
         }
         else {
-            throw new BusinessException("用户不存在");
+            throw new BusinessException(USER_NOT_EXIST);
         }
     }
 
@@ -85,7 +87,7 @@ class UserServiceImpl implements UserService {
             }
         }
         else {
-            throw new BusinessException("用户不存在");
+            throw new BusinessException(USER_NOT_EXIST);
         }
     }
 }

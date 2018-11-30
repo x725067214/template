@@ -63,6 +63,13 @@
 			<version>3.8</version>
 		</dependency>
 
+		<!--加解密-->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.10</version>
+		</dependency>
+
 		<!--&lt;!&ndash;安全访问控制&ndash;&gt;-->
 		<!--<dependency>-->
 			<!--<groupId>org.springframework.boot</groupId>-->

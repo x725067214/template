@@ -19,7 +19,7 @@ public class UserServiceImplTests {
     @Autowired
     private UserService userService;
 
-    @Test
+    //@Test
     public void findByUsername() {
         Optional<UserDTO> userDTO = userService.findByUsername("system");
         System.out.println(userDTO.get().toString());

@@ -5,6 +5,14 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
+import org.hibernate.sql.Update;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 /**
@@ -25,37 +33,50 @@ public class UserDTO {
     /**
      * 用户名
      */
+    @NotBlank(message = "用户名不能为空", groups = Save.class)
+    @Length(min = 8, max = 32, message = "用户名长度为8-32个字符", groups = {Save.class, Update.class})
     private String username;
 
     /**
      * 密码
      */
+    @NotBlank(message = "密码不能为空", groups = Save.class)
+    @Length(min = 8, max = 16, message = "密码长度为8-16个字符", groups = {Save.class, Update.class})
     private String password;
 
     /**
      * 真实姓名
      */
+    @NotBlank(message = "真实姓名不能为空", groups = Save.class)
+    @Length(min = 2, max = 32, message = "真实姓名长度为2-32个字符", groups = {Save.class, Update.class})
     private String realName;
 
     /**
      * 手机号
      */
+    @NotBlank(message = "手机号不能为空", groups = Save.class)
+    @Pattern(regexp = "^(13[0-9]|14[01456789]|15[0-9]|16[56]|17[01235678]|18[0-9]|19[89])\\d{8}$",
+            message = "手机号格式错误", groups = {Save.class, Update.class})
     private String mobile;
 
     /**
      * 邮箱
      */
+    @Email(message = "邮箱格式错误", groups = {Save.class, Update.class})
+    @Length(max = 64, message = "邮箱长度最多为64个字符", groups = {Save.class, Update.class})
     private String email;
-
-    /**
-     * 职位
-     */
-    private String position;
 
     /**
      * 状态，0-冻结，1-正常
      */
+    @NotNull(message = "状态不能为空", groups = Save.class)
+    @Range(min = 0, max = 1, message = "状态值只能为0或1", groups = {Save.class, Update.class})
     private Integer status;
+
+    /**
+     * 固定，0-否，1-是
+     */
+    private Integer fixed;
 
     /**
      * 创建时间
@@ -88,4 +109,8 @@ public class UserDTO {
      * 更新者名称
      */
     private String updaterName;
+
+    public interface Save {}
+
+    public interface Update {}
 }

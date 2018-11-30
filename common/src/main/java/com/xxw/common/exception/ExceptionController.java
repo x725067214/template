@@ -4,6 +4,7 @@ import com.xxw.common.web.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
+
+import static com.xxw.common.constant.ExceptionConstants.DATA_INTEGRITY_VIOLATION;
 
 /**
  * @author xxw
@@ -52,9 +55,12 @@ public class ExceptionController implements ErrorController {
             return ResponseResult.build(businessException.getCode(), businessException.getMessage());
         }
         else if (throwable instanceof MethodArgumentNotValidException) {
-            String message = ((MethodArgumentNotValidException) throwable).getBindingResult().getFieldError()
-                    .getDefaultMessage();
+            String message = ((MethodArgumentNotValidException) throwable).getBindingResult().getAllErrors().iterator()
+                    .next().getDefaultMessage();
             return ResponseResult.fail(message);
+        }
+        else if (throwable instanceof DataIntegrityViolationException) {
+            return ResponseResult.fail(DATA_INTEGRITY_VIOLATION);
         }
         return ResponseResult.fail(throwable.getMessage());
     }

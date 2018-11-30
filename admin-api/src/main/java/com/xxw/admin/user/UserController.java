@@ -1,24 +1,46 @@
 package com.xxw.admin.user;
 
+import com.github.dozermapper.core.Mapper;
 import com.xxw.common.web.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author xxw
  * @date 2018/11/27
  */
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/user")
-    @ResponseBody
+    @Autowired
+    private Mapper mapper;
+
+    @PostMapping("/user/save")
+    public ResponseResult save(@Validated(UserDTO.Save.class) @RequestBody UserDTO userDTO) {
+        userService.save(userDTO);
+        return ResponseResult.success();
+    }
+
+    @GetMapping("/user/find")
     public ResponseResult findById(Integer id) {
-        return ResponseResult.success(userService.findById(id));
+        UserDTO userDTO = userService.findById(id);
+        UserVO userVO = mapper.map(userDTO, UserVO.class);
+        return ResponseResult.success(userVO);
+    }
+
+    @PostMapping("/user/update")
+    public ResponseResult update(@Validated(UserDTO.Update.class) @RequestBody UserDTO userDTO) {
+        userService.update(userDTO);
+        return ResponseResult.success();
+    }
+
+    @GetMapping("/user/delete")
+    public ResponseResult delete(Integer id) {
+        userService.deleteById(id);
+        return ResponseResult.success();
     }
 }

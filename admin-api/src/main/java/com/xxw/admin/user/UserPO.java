@@ -56,14 +56,14 @@ class UserPO {
 	private String email;
 
 	/**
-	 * 职位
-	 */
-	private String position;
-
-	/**
 	 * 状态，0-冻结，1-正常
 	 */
 	private Integer status;
+
+	/**
+	 * 固定，0-否，1-是
+	 */
+	private Integer fixed;
 
 	/**
 	 * 创建时间

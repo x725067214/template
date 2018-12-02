@@ -59,9 +59,6 @@ public class ExceptionController implements ErrorController {
                     .next().getDefaultMessage();
             return ResponseResult.fail(message);
         }
-        else if (throwable instanceof DataIntegrityViolationException) {
-            return ResponseResult.fail(DATA_INTEGRITY_VIOLATION);
-        }
         return ResponseResult.fail(throwable.getMessage());
     }
 }

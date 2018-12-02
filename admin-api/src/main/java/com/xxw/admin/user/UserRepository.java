@@ -1,5 +1,6 @@
 package com.xxw.admin.user;
 
+import com.xxw.admin.user.pojo.UserPO;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.Optional;
@@ -13,4 +14,6 @@ public interface UserRepository extends PagingAndSortingRepository<UserPO, Integ
     Optional<UserPO> findByUsername(String username);
 
     boolean existsByUsername(String username);
+
+    boolean existsByUsernameAndIdNot(String username, Integer id);
 }

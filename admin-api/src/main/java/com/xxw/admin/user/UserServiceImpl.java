@@ -1,12 +1,15 @@
 package com.xxw.admin.user;
 
 import com.github.dozermapper.core.Mapper;
+import com.xxw.admin.user.pojo.UserDTO;
+import com.xxw.admin.user.pojo.UserPO;
 import com.xxw.common.exception.BusinessException;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 /**
@@ -14,9 +17,11 @@ import java.util.Optional;
  * @date 2018/11/26
  */
 @Service
-class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     private static final String USER_NOT_EXIST = "用户不存在";
+
+    private static final String USERNAME_EXISTED = "用户名已存在";
 
     @Autowired
     private UserRepository userRepository;
@@ -40,7 +45,7 @@ class UserServiceImpl implements UserService {
 
     public void save(UserDTO userDTO) {
         if (userRepository.existsByUsername(userDTO.getUsername())) {
-            throw new BusinessException("用户名已存在");
+            throw new BusinessException(USERNAME_EXISTED);
         }
         userDTO.setPassword(HmacUtils.hmacSha256Hex(passwordSecretKey, userDTO.getPassword()));
         UserPO userPO = mapper.map(userDTO, UserPO.class);
@@ -58,18 +63,18 @@ class UserServiceImpl implements UserService {
     }
 
     public void update(UserDTO userDTO) {
+        if (StringUtils.isNotBlank(userDTO.getUsername())) {
+            if (userRepository.existsByUsernameAndIdNot(userDTO.getUsername(), userDTO.getId())) {
+                throw new BusinessException(USERNAME_EXISTED);
+            }
+        }
+        if (StringUtils.isNotBlank(userDTO.getPassword())) {
+            userDTO.setPassword(HmacUtils.hmacSha256Hex(passwordSecretKey, userDTO.getPassword()));
+        }
         Optional<UserPO> userPO = userRepository.findById(userDTO.getId());
         if (userPO.isPresent()) {
-            if (userPO.get().getFixed() == 1) {
-                throw new BusinessException("固定用户不能更新");
-            }
-            else {
-                if (StringUtils.isNotBlank(userDTO.getPassword())) {
-                    userDTO.setPassword(HmacUtils.hmacSha256Hex(passwordSecretKey, userDTO.getPassword()));
-                }
-                mapper.map(userDTO, userPO.get());
-                userRepository.save(userPO.get());
-            }
+            mapper.map(userDTO, userPO.get());
+            userRepository.save(userPO.get());
         }
         else {
             throw new BusinessException(USER_NOT_EXIST);
@@ -79,7 +84,7 @@ class UserServiceImpl implements UserService {
     public void deleteById(Integer id) {
         Optional<UserPO> userPO = userRepository.findById(id);
         if (userPO.isPresent()) {
-            if (userPO.get().getFixed() == 1) {
+            if (userPO.get().getFixed()) {
                 throw new BusinessException("固定用户不能删除");
             }
             else {

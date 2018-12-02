@@ -1,4 +1,4 @@
-package com.xxw.admin.user;
+package com.xxw.admin.user.pojo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "user")
 @EntityListeners(AuditingEntityListener.class)
-class UserPO {
+public class UserPO {
 
 	/**
 	 * ID
@@ -56,14 +56,14 @@ class UserPO {
 	private String email;
 
 	/**
-	 * 状态，0-冻结，1-正常
+	 * 是否可用
 	 */
-	private Integer status;
+	private Boolean enabled;
 
 	/**
-	 * 固定，0-否，1-是
+	 * 是否固定
 	 */
-	private Integer fixed;
+	private Boolean fixed;
 
 	/**
 	 * 创建时间

@@ -1,22 +1,13 @@
 package com.xxw.admin.user;
 
-import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
-import com.xxw.admin.MysqlDbUnitTestExecutionListener;
+import com.xxw.admin.user.pojo.UserPO;
 import org.hibernate.exception.ConstraintViolationException;
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 /**
@@ -42,7 +33,7 @@ public class UserRepositoryTests {
                 .setRealName("张三")
                 .setMobile("18888888888")
                 .setEmail("111111111@qq.com")
-                .setStatus(1);
+                .setEnabled(true);
         userRepository.save(userPO);
     }
 
@@ -55,7 +46,7 @@ public class UserRepositoryTests {
                 .setRealName("张三")
                 .setMobile("18888888888")
                 .setEmail("111111111@qq.com")
-                .setStatus(1);
+                .setEnabled(true);
         userRepository.save(userPO);
         userPO.setId(null);
         try {

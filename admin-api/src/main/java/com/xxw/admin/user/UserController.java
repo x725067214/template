@@ -1,6 +1,8 @@
 package com.xxw.admin.user;
 
 import com.github.dozermapper.core.Mapper;
+import com.xxw.admin.user.pojo.UserDTO;
+import com.xxw.admin.user.pojo.UserVO;
 import com.xxw.common.web.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;

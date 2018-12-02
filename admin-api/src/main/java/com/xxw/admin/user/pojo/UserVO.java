@@ -1,4 +1,4 @@
-package com.xxw.admin.user;
+package com.xxw.admin.user.pojo;
 
 import com.xxw.common.json.serializer.LocalDateTimeFormat;
 import lombok.Getter;

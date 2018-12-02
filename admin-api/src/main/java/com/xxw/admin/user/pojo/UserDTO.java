@@ -1,11 +1,10 @@
-package com.xxw.admin.user;
+package com.xxw.admin.user.pojo;
 
 import com.xxw.common.json.serializer.LocalDateTimeFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
-import org.hibernate.sql.Update;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
@@ -28,6 +27,7 @@ public class UserDTO {
     /**
      * ID
      */
+    @NotNull(message = "ID不能为空", groups = Update.class)
     private Integer id;
 
     /**

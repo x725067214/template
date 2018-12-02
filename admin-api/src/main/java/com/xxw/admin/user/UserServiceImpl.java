@@ -63,10 +63,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public void update(UserDTO userDTO) {
-        if (StringUtils.isNotBlank(userDTO.getUsername())) {
-            if (userRepository.existsByUsernameAndIdNot(userDTO.getUsername(), userDTO.getId())) {
-                throw new BusinessException(USERNAME_EXISTED);
-            }
+        if (StringUtils.isNotBlank(userDTO.getUsername())
+                && userRepository.existsByUsernameAndIdNot(userDTO.getUsername(), userDTO.getId())) {
+            throw new BusinessException(USERNAME_EXISTED);
         }
         if (StringUtils.isNotBlank(userDTO.getPassword())) {
             userDTO.setPassword(HmacUtils.hmacSha256Hex(passwordSecretKey, userDTO.getPassword()));

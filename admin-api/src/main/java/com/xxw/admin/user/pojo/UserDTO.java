@@ -45,11 +45,11 @@ public class UserDTO {
     private String password;
 
     /**
-     * 真实姓名
+     * 昵称
      */
-    @NotBlank(message = "真实姓名不能为空", groups = Save.class)
-    @Length(min = 2, max = 32, message = "真实姓名长度为2-32个字符", groups = {Save.class, Update.class})
-    private String realName;
+    @NotBlank(message = "昵称不能为空", groups = Save.class)
+    @Length(min = 2, max = 32, message = "昵称长度为2-32个字符", groups = {Save.class, Update.class})
+    private String nickname;
 
     /**
      * 手机号
@@ -67,16 +67,15 @@ public class UserDTO {
     private String email;
 
     /**
-     * 状态，0-冻结，1-正常
+     * 是否可用
      */
     @NotNull(message = "状态不能为空", groups = Save.class)
-    @Range(min = 0, max = 1, message = "状态值只能为0或1", groups = {Save.class, Update.class})
-    private Integer status;
+    private Boolean enabled;
 
     /**
-     * 固定，0-否，1-是
+     * 是否固定
      */
-    private Integer fixed;
+    private Boolean fixed;
 
     /**
      * 创建时间

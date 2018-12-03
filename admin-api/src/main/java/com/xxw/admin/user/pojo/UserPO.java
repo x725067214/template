@@ -40,10 +40,9 @@ public class UserPO {
 	private String password;
 
 	/**
-	 * 真实姓名
+	 * 昵称
 	 */
-	@Column(name = "real_name")
-	private String realName;
+	private String nickname;
 
 	/**
 	 * 手机号

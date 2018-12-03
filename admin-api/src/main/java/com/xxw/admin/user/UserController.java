@@ -1,10 +1,11 @@
 package com.xxw.admin.user;
 
-import com.github.dozermapper.core.Mapper;
 import com.xxw.admin.user.pojo.UserDTO;
-import com.xxw.admin.user.pojo.UserVO;
+import com.xxw.common.web.PageModel;
 import com.xxw.common.web.ResponseResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +19,6 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @Autowired
-    private Mapper mapper;
-
     @PostMapping("/user/save")
     public ResponseResult save(@Validated(UserDTO.Save.class) @RequestBody UserDTO userDTO) {
         userService.save(userDTO);
@@ -28,10 +26,8 @@ public class UserController {
     }
 
     @GetMapping("/user/find")
-    public ResponseResult findById(Integer id) {
-        UserDTO userDTO = userService.findById(id);
-        UserVO userVO = mapper.map(userDTO, UserVO.class);
-        return ResponseResult.success(userVO);
+    public ResponseResult find(Integer id) {
+        return ResponseResult.success(userService.findById(id));
     }
 
     @PostMapping("/user/update")
@@ -44,5 +40,11 @@ public class UserController {
     public ResponseResult delete(Integer id) {
         userService.deleteById(id);
         return ResponseResult.success();
+    }
+
+    @GetMapping("/user/page")
+    public ResponseResult page(UserDTO userDTO, Pageable pageable) {
+        Page<UserDTO> userDTOPage = userService.findAll(userDTO, pageable);
+        return ResponseResult.success(new PageModel(userDTOPage.getContent(), userDTOPage.getTotalElements()));
     }
 }

@@ -8,8 +8,15 @@ import org.apache.commons.codec.digest.HmacUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -93,5 +100,24 @@ public class UserServiceImpl implements UserService {
         else {
             throw new BusinessException(USER_NOT_EXIST);
         }
+    }
+
+    public Page<UserDTO> findAll(UserDTO userDTO, Pageable pageable) {
+        return userRepository.findAll((Specification<UserPO>) (root, criteriaQuery, criteriaBuilder) -> {
+            List<Predicate> predicateList = new ArrayList<>();
+            if (Objects.nonNull(userDTO.getId())) {
+                predicateList.add(criteriaBuilder.equal(root.get("id"), userDTO.getId()));
+            }
+            if (StringUtils.isNotBlank(userDTO.getUsername())) {
+                predicateList.add(criteriaBuilder.like(root.get("username"), "%" + userDTO.getUsername() + "%"));
+            }
+            if (StringUtils.isNotBlank(userDTO.getNickname())) {
+                predicateList.add(criteriaBuilder.like(root.get("nickname"), "%" + userDTO.getNickname() + "%"));
+            }
+            if (Objects.nonNull(userDTO.getEnabled())) {
+                predicateList.add(criteriaBuilder.equal(root.get("enabled"), userDTO.getEnabled()));
+            }
+            return criteriaBuilder.and(predicateList.toArray(new Predicate[predicateList.size()]));
+        }, pageable).map(userPO -> mapper.map(userPO, UserDTO.class));
     }
 }

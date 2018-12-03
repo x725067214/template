@@ -30,7 +30,7 @@ public class UserRepositoryTests {
         UserPO userPO = new UserPO()
                 .setUsername("zhangsan")
                 .setPassword("123456")
-                .setRealName("张三")
+                .setNickname("张三")
                 .setMobile("18888888888")
                 .setEmail("111111111@qq.com")
                 .setEnabled(true);
@@ -43,7 +43,7 @@ public class UserRepositoryTests {
         UserPO userPO = new UserPO()
                 .setUsername("zhangsan")
                 .setPassword("123456")
-                .setRealName("张三")
+                .setNickname("张三")
                 .setMobile("18888888888")
                 .setEmail("111111111@qq.com")
                 .setEnabled(true);
@@ -66,7 +66,7 @@ public class UserRepositoryTests {
     public void find() {
         Optional<UserPO> userPO = userRepository.findById(100001);
         if (userPO.isPresent()) {
-            System.out.println(userPO.get().getRealName());
+            System.out.println(userPO.get().getNickname());
             System.out.println(userPO.get().getCreateTime());
         }
         else {
